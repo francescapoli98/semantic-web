@@ -1,4 +1,4 @@
-# EXAMPLE 1
+# EXAMPLE 
 # Use the Turtle syntax to represent a set of facts about Italian poet Dante Alighieri
 
 @prefix : <http://example.org/> .   
@@ -22,8 +22,7 @@
     <dateofdeath> "1321-09-14"^^xsd:date ;
     <isauthorof> <DivineComedy>   .
 
-
-
+# EXERCISE 
 ####################################################################
 # Use the Turtle syntax to represent 2 separate sets of facts about each of the following resources:
 # ● English computer scientist Alan Mathison Turing: type of resource, name, date of birth, date of death, the fact that he formalized the Turing Machine, using only relative IRIs.

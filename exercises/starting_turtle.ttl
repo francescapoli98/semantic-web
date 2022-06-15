@@ -1,0 +1,55 @@
+# EXAMPLE 
+# Use the Turtle syntax to represent a set of facts about Italian poet Dante Alighieri
+
+@prefix : <http://example.org/> .   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   . 
+
+:dante :rdf:type :Person    ;
+    :name "Dante Alighieri" ;
+    :comment "Dante Alighieri is one of the greatest Italian poets of all history"  ;
+    :dateOfDeath "1321-09-14"^^xsd:date ;
+    :isAuthorOf :DivineComedy   .
+
+# That can also be written like:
+@prefix : <http://example.org/> .   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   . 
+
+<Dante> :rdf:type <Person>    ;
+    <name> "Dante Alighieri"    ;
+    <comment> "Dante Alighieri is one of the greatest Italian poets of all history"  ;
+    <dateOfDeath> "1321-09-14"^^xsd:date ;
+    <isAuthorOf> <DivineComedy>   .
+
+# EXERCISE 
+####################################################################
+# Use the Turtle syntax to represent 2 separate sets of facts about each of the following resources:
+# ● English computer scientist Alan Mathison Turing: type of resource, name, date of birth, date of death, the fact that he formalized the Turing Machine, using only relative IRIs.
+# ● The Apple foundation of April 1, 1976: type of resource (event), date, and each of the three participants, using an object list for the participants
+####################################################################
+
+#Turing
+
+@prefix : <http://example.org/> .   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   .
+
+<Turing> rdf:type <Person>  ;
+    <name> "Alan Mathison Turing"   ;
+    <dateOfBirth> "1912-06-23"^^xsd:date    ;
+    <dateOfDeath> "1954-06-07"^^xsd:date    ;
+    <formalized>    <TuringMachine> .
+
+#Apple
+
+@prefix : <http://example.org/> .   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   .
+:AppleFundation rdf:type :event  ;
+    :date "1976-04-01"^^xsd:date    ;
+    :participated   :SteveJobs  ,    
+                    :SteveWozniak   ,
+                    :RonaldWayne    .
+
+

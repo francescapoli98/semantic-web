@@ -27,3 +27,29 @@ wd:Q223131  a   rdfs:Book ;
 
 ###IBM Personal Computer is a computer (subclass of object) presented on August 12, 1981. It was created by IBM, a corporation (subclass of organization) whose name is International Business Machines. Its description is “an American multinational technology corporation” and its homepage is https://www.ibm.com/.
 ######################################
+
+#   Sherlock Holmes
+@prefix :   <http://example.org/>   .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/>  .
+@prefix dcterms:    <http://purl.org/dc/terms/>   .
+@prefix dctypes:    <http://purl.org/dc/dcmitype/>    .
+@prefix wd:     <http://www.wikidata.org/entity/>   .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+#defining subproperties
+:isBestFriend   rdfs:subPropertyOf    foaf:knows    .
+:isWorstEnemy   rdfs:subPropertyOf    foaf:knows    .
+#translation
+wd:Q4653    a   foaf:Person ;
+    foaf:givenName   "Sherlock"   ;
+    foaf:familyName   "Holmes"   ;
+    :isBestFriend   wd:Q187349  ;
+    :isWorstEnemy    wd:Q283111 .
+wd:Q187349  a    foaf:Person ;
+    foaf:givenName   "John"   ;
+    foaf:familyName   "Watson"   .
+wd:Q283111  a    foaf:Person ;
+    foaf:familyName   "Moriarty"   .
+
+    
+

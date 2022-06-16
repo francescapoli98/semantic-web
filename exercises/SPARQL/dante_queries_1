@@ -1,12 +1,14 @@
-####################################################
-#   Write a query to display in Blazegraph:
-#       IRI and label of all people
+# ###################################################
+#   Write a SPARQL query to display in Blazegraph:
 #       Given name of all people with family name “Alighieri”
 #       IRI and label of all Dante’s texts in alphabetical order
 #       Label and date of the first two Dante’s texts in chronological order
 #       Family names of all people without duplicates
 #       Label and date of all Dante’s texts created after 1310
-####################################################
+# ###################################################
+
+# IRI and label of all people
+
 
 
 

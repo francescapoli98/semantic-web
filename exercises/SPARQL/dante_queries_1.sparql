@@ -1,5 +1,4 @@
 # Write a SPARQL query to display in Blazegraph:
-#       Given name of all people with family name “Alighieri”
 #       IRI and label of all Dante’s texts in alphabetical order
 #       Label and date of the first two Dante’s texts in chronological order
 #       Family names of all people without duplicates
@@ -15,6 +14,16 @@ WHERE {
     ?iri rdfs:label ?label .
     }
 
+# Given name of all people with family name “Alighieri”
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT ?givenName 
+WHERE {
+    ?iri rdf:type foaf:Person   ;
+        foaf:familyName "Alighieri" ;
+        foaf:givenName  ?givenName  .
+}
 
 
 

@@ -38,3 +38,99 @@ WHERE	{
  {?textIRI dcterms:language	wd:Q150	.}
 }
 
+# labels of all texts created by Dante Alighieri or Brunetto Latini with date < 1300 
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?label
+WHERE {
+  ?iri a dctypes:Text;
+         rdfs:label	?label	;
+         dcterms:issued	?date	.
+  {?iri	dcterms:creator	wd:Q1067	.}
+         UNION
+  {?iri	dcterms:creator	wd:Q366328	.}
+  FILTER(?date	< '1300'^^xsd:date)
+}
+
+# the number of texts created by Dante Alighieri, grouped by language
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?language (COUNT (?iri) AS ?text) 
+WHERE {
+  ?iri a dctypes:Text	;
+         dcterms:creator	wd:Q1067	;
+         dcterms:language	?language	.
+} GROUP BY ?language
+#I don't like the fact that the output presents the IRI of the language instead of its label. Fix it!
+
+
+# labels of all texts created by Dante Alighieri, minus those written in Latin
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?label
+WHERE {
+  ?iri a dctypes:Text	;
+         dcterms:creator	wd:Q1067	;
+         rdfs:label	?label	.
+   MINUS { ?iri dcterms:language	wd:Q397}
+}
+
+# IRIs and labels of all people who do not have children
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?iri ?label
+WHERE{
+  ?iri a foaf:Person	;
+         rdfs:label	?label	.
+  FILTER NOT EXISTS {?iri :hasChild	?childIri	.}
+}
+
+# distinct labels of people who did not write any texts in Italian nor Latin
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT DISTINCT ?label	
+WHERE{
+  ?iri a foaf:Person	;
+         rdfs:label	?label	.
+  MINUS {
+  ?textIri	rdf:type	dctypes:Text;
+            dcterms:creator	?iri;
+            {?textIri	dcterms:language	wd:Q397	.} UNION {?textIri	dcterms:language	wd:Q652	.}
+    
+    }
+}

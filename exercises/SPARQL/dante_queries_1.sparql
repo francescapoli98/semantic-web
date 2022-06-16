@@ -3,8 +3,7 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX dctypes: <http://purl.org/dc/dcmitype/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 # Write a SPARQL query to display in Blazegraph:
-#       Label and date of the first two Dante’s texts in chronological order
-#       Family names of all people without duplicates
+
 #       Label and date of all Dante’s texts created after 1310
 
 # IRI and label of all people
@@ -43,5 +42,25 @@ WHERE {
          rdfs:label   ?label  .
 }
 ORDER BY ?label 
+
+# Label and date of the first two Dante’s texts in chronological order
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+PREFIX wd:<http://www.wikidata.org/entity/>
+SELECT ?label ?date
+WHERE{
+  ?iri rdf:type	dctypes:Text	;
+       rdfs:label	?label	;
+       dcterms:creator	wd:Q1067	;
+       dcterms:issued	?date	.
+}
+ORDER BY ?date
+LIMIT 2
+
+
 
 

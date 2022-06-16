@@ -1,0 +1,40 @@
+### Write a query to display in Blazegraph:
+
+# Given names of all people, and optionally the family name of their teacher
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?givenName ?familyName
+WHERE {
+  ?iri a foaf:Person	;
+       foaf:givenName ?givenName	.
+  		OPTIONAL{
+    	?iri :hasTeacher ?teacher	.
+    	?teacher	foaf:familyName ?familyName	. 	}
+}
+
+# IRIs and labels of the texts in Italian or French language
+PREFIX : <http://example.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+
+SELECT ?textIRI ?textLabel
+WHERE	{
+  ?textIRI a dctypes:Text	;
+             rdfs:label	?textLabel	;
+ {?textIRI dcterms:language	wd:Q652	.}
+             UNION
+ {?textIRI dcterms:language	wd:Q150	.}
+}
+

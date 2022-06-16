@@ -1,0 +1,125 @@
+@prefix : <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dctypes: <http://purl.org/dc/dcmitype/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+
+# Some classes
+:Writer rdfs:subClassOf foaf:Person .
+:Poet rdfs:subClassOf foaf:Person .
+:Philosopher rdfs:subClassOf foaf:Person .
+
+# Some properties
+:loves rdfs:subPropertyOf foaf:knows .
+:hasParent rdfs:subPropertyOf foaf:knows .
+:hasChild rdfs:subPropertyOf foaf:knows .
+:hasTeacher rdfs:subPropertyOf foaf:knows .
+
+# Dante Alighieri (a writer and poet)
+wd:Q1067
+	rdf:type :Writer, :Poet ;
+	foaf:givenName "Dante" ;
+	foaf:familyName "Alighieri" ;
+	rdfs:label "Dante Alighieri" ;
+	:hasParent wd:Q3637724 ;
+	:hasParent wd:Q3611787 ;
+	:loves wd:Q232913 ;
+	:hasTeacher wd:Q366328 .
+
+# Beatrice Portinari (Dante's muse)
+wd:Q232913
+	rdf:type foaf:Person ;
+	foaf:givenName "Beatrice" ;
+	foaf:familyName "Portinari" ;
+	rdfs:label "Beatrice Portinari" ;
+	foaf:knows wd:Q1067 .
+
+# Brunetto Latini (Dante's teacher)
+wd:Q366328
+	rdf:type :Writer, :Poet, :Philosopher ;
+	foaf:givenName "Brunetto" ;
+	foaf:familyName "Latini" ;
+	rdfs:label "Brunetto Latini" ;
+	foaf:knows wd:Q1067 .
+
+# Aristotle (Greek philosopher)
+wd:Q868
+	rdf:type :Philosopher ;
+	foaf:givenName "Aristotle" ;
+	rdfs:label "Aristotle" .
+
+# Bella degli Abati (Dante's mother)
+wd:Q3637724
+	rdf:type foaf:Person ;
+	foaf:givenName "Bella" ;
+	foaf:familyName "degli Abati" ;
+	rdfs:label "Bella degli Abati" ;
+	:hasChild wd:Q1067 .
+
+# Alighiero Alighieri (Dante's father)
+wd:Q3611787
+	rdf:type foaf:Person ;
+	foaf:givenName "Alighiero" ;
+	foaf:familyName "Alighieri" ;
+	rdfs:label "Alighiero Alighieri" ;
+	:hasChild wd:Q1067 .
+
+# Divine Comedy (work by Dante)
+wd:Q40185
+	rdf:type dctypes:Text;
+	rdfs:label "Divine Comedy" ;
+	dcterms:language wd:Q652 ;
+	dcterms:creator wd:Q1067 ;
+	dcterms:issued "1309-01-01"^^xsd:date .
+
+# Convivio (work by Dante)
+wd:Q666014
+	rdf:type dctypes:Text;
+	rdfs:label "Convivio" ;
+	dcterms:language wd:Q652 ;
+	dcterms:creator wd:Q1067 ;
+	dcterms:issued "1304-01-01"^^xsd:date .
+
+# Vita Nova (work by Dante)
+wd:Q18084
+	rdf:type dctypes:Text;
+	rdfs:label "Vita Nova" ;
+	dcterms:language wd:Q652 ;
+	dcterms:creator wd:Q1067 ;
+	dcterms:issued "1293-01-01"^^xsd:date .
+
+# Monarchia (work by Dante)
+wd:Q134221
+	rdf:type dctypes:Text;
+	rdfs:label "Monarchia" ;
+	dcterms:language wd:Q397 ;
+	dcterms:creator wd:Q1067 ;
+	dcterms:issued "1312-01-01"^^xsd:date .
+
+# De Vulgari Eloquentia (work by Dante)
+wd:Q18081
+	rdf:type dctypes:Text;
+	rdfs:label "De Vulgari Eloquentia" ;
+	dcterms:language wd:Q397 ;
+	dcterms:creator wd:Q1067 ;
+	dcterms:issued "1305-01-01"^^xsd:date .
+
+# Tresor (work by Brunetto Latini)
+wd:Q1664023
+	rdf:type dctypes:Text;
+	rdfs:label "Tresor" ;
+	dcterms:language wd:Q150 ;
+	dcterms:creator wd:Q366328 ;
+	dcterms:issued "1260-01-01"^^xsd:date .
+
+# Italian language
+wd:Q652 rdfs:label "Italian" .
+
+# Latin language
+wd:Q397 rdfs:label "Latin" .
+
+# French language
+wd:Q150 rdfs:label "French" .

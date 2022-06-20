@@ -1,0 +1,562 @@
+@prefix : <http://semanticwebcourse.org/poli/seminar5/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dctypes: <http://purl.org/dc/dcmitype/> .
+@base <http://semanticwebcourse.org/poli/seminar5/> .
+
+<http://semanticwebcourse.org/poli/seminar5/> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://semanticwebcourse.org/poli/seminar5/hasBase
+:hasBase rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :hasIngredient ;
+         owl:inverseOf :isBaseOf ;
+         rdf:type owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ;
+         rdfs:domain :Pizza ;
+         rdfs:range :PizzaBase .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasBought
+:hasBought rdf:type owl:ObjectProperty ;
+           owl:inverseOf :wasBoughtBy ;
+           rdf:type owl:InverseFunctionalProperty ;
+           rdfs:domain foaf:Person ;
+           rdfs:range :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasIngredient
+:hasIngredient rdf:type owl:ObjectProperty ;
+               owl:inverseOf :isIngredientOf ;
+               rdf:type owl:TransitiveProperty ;
+               rdfs:domain :Food ;
+               rdfs:range :Food .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasMade
+:hasMade rdf:type owl:ObjectProperty ;
+         owl:inverseOf :wasMadeBy ;
+         rdf:type owl:InverseFunctionalProperty ;
+         rdfs:domain :Pizzeria ;
+         rdfs:range :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasPizzeria
+:hasPizzeria rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf :isBasedIn ;
+             rdf:type owl:InverseFunctionalProperty ;
+             rdfs:domain :City ;
+             rdfs:range :Pizzeria .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasTopping
+:hasTopping rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :hasIngredient ;
+            owl:inverseOf :isToppingOf ;
+            rdfs:domain :Pizza ;
+            rdfs:range :PizzaTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/hasVisited
+:hasVisited rdf:type owl:ObjectProperty ;
+            rdfs:domain foaf:Person ;
+            rdfs:range dctypes:Location ;
+            owl:propertyChainAxiom ( :hasBought
+                                     :wasMadeBy
+                                     :isBasedIn
+                                   ) .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/isBaseOf
+:isBaseOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :isIngredientOf ;
+          rdf:type owl:FunctionalProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :PizzaBase ;
+          rdfs:range :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/isBasedIn
+:isBasedIn rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Pizzeria ;
+           rdfs:range :City .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/isIngredientOf
+:isIngredientOf rdf:type owl:ObjectProperty ,
+                         owl:TransitiveProperty ;
+                rdfs:domain :Food ;
+                rdfs:range :Food .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/isToppingOf
+:isToppingOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :isIngredientOf ;
+             rdfs:domain :PizzaTopping ;
+             rdfs:range :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/wasBoughtBy
+:wasBoughtBy rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Pizza ;
+             rdfs:range foaf:Person .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/wasMadeBy
+:wasMadeBy rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Pizza ;
+           rdfs:range :Pizzeria .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://semanticwebcourse.org/poli/seminar5/hasPrice
+:hasPrice rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Pizza ;
+          rdfs:range xsd:integer .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://purl.org/dc/dcmitype/Location
+dctypes:Location rdf:type owl:Class .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/AnchoviesTopping
+:AnchoviesTopping rdf:type owl:Class ;
+                  rdfs:subClassOf :FishTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/ArtichokeTopping
+:ArtichokeTopping rdf:type owl:Class ;
+                  rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/BasilTopping
+:BasilTopping rdf:type owl:Class ;
+              rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/BrieTopping
+:BrieTopping rdf:type owl:Class ;
+             rdfs:subClassOf :CheeseTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/CaperTopping
+:CaperTopping rdf:type owl:Class ;
+              rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/CheeseTopping
+:CheeseTopping rdf:type owl:Class ;
+               rdfs:subClassOf :PizzaTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/City
+:City rdf:type owl:Class ;
+      rdfs:subClassOf dctypes:Location .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/FishTopping
+:FishTopping rdf:type owl:Class ;
+             rdfs:subClassOf :PizzaTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/Food
+:Food rdf:type owl:Class .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/FourCheesePizza
+:FourCheesePizza rdf:type owl:Class ;
+                 rdfs:subClassOf :NamedPizza ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasBase ;
+                                   owl:allValuesFrom :WhiteBase
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasTopping ;
+                                   owl:qualifiedCardinality "4"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :CheeseTopping
+                                 ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/FourSeasonPizza
+:FourSeasonPizza rdf:type owl:Class ;
+                 rdfs:subClassOf :NamedPizza ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasBase ;
+                                   owl:allValuesFrom :RedBase
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasTopping ;
+                                   owl:allValuesFrom [ rdf:type owl:Class ;
+                                                       owl:unionOf ( :ArtichokeTopping
+                                                                     :HamTopping
+                                                                     :MozzarellaTopping
+                                                                     :MushroomTopping
+                                                                     :OliveTopping
+                                                                   )
+                                                     ]
+                                 ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/GarlicTopping
+:GarlicTopping rdf:type owl:Class ;
+               rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/GorgonzolaTopping
+:GorgonzolaTopping rdf:type owl:Class ;
+                   rdfs:subClassOf :CheeseTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/HamMushroomPizza
+:HamMushroomPizza rdf:type owl:Class ;
+                  rdfs:subClassOf :NamedPizza ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :hasBase ;
+                                    owl:allValuesFrom :RedBase
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :hasTopping ;
+                                    owl:allValuesFrom [ rdf:type owl:Class ;
+                                                        owl:unionOf ( :HamTopping
+                                                                      :MozzarellaTopping
+                                                                      :MushroomTopping
+                                                                    )
+                                                      ]
+                                  ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/HamTopping
+:HamTopping rdf:type owl:Class ;
+            rdfs:subClassOf :MeatTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/IceCream
+:IceCream rdf:type owl:Class ;
+          rdfs:subClassOf :Food .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/MargheritaPizza
+:MargheritaPizza rdf:type owl:Class ;
+                 rdfs:subClassOf :NamedPizza ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasBase ;
+                                   owl:allValuesFrom :RedBase
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasTopping ;
+                                   owl:allValuesFrom [ rdf:type owl:Class ;
+                                                       owl:unionOf ( :BasilTopping
+                                                                     :MozzarellaTopping
+                                                                   )
+                                                     ]
+                                 ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/MarinaraPizza
+:MarinaraPizza rdf:type owl:Class ;
+               rdfs:subClassOf :NamedPizza ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :hasBase ;
+                                 owl:allValuesFrom :RedBase
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :hasTopping ;
+                                 owl:allValuesFrom [ rdf:type owl:Class ;
+                                                     owl:unionOf ( :BasilTopping
+                                                                   :GarlicTopping
+                                                                 )
+                                                   ]
+                               ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/MeatTopping
+:MeatTopping rdf:type owl:Class ;
+             rdfs:subClassOf :PizzaTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/MozzarellaTopping
+:MozzarellaTopping rdf:type owl:Class ;
+                   rdfs:subClassOf :CheeseTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/MushroomTopping
+:MushroomTopping rdf:type owl:Class ;
+                 rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/NamedPizza
+:NamedPizza rdf:type owl:Class ;
+            rdfs:subClassOf :Pizza ;
+            owl:disjointUnionOf ( :FourCheesePizza
+                                  :FourSeasonPizza
+                                  :HamMushroomPizza
+                                  :MargheritaPizza
+                                  :MarinaraPizza
+                                  :PisanPizza
+                                ) .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/NapoletanaPizza
+:NapoletanaPizza rdf:type owl:Class ;
+                 rdfs:subClassOf :NamedPizza ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasBase ;
+                                   owl:allValuesFrom :RedBase
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasTopping ;
+                                   owl:allValuesFrom [ rdf:type owl:Class ;
+                                                       owl:unionOf ( :AnchoviesTopping
+                                                                     :CaperTopping
+                                                                   )
+                                                     ]
+                                 ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/NonVegetarianPizza
+:NonVegetarianPizza rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasTopping ;
+                                          owl:someValuesFrom :FishTopping
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasTopping ;
+                                          owl:someValuesFrom :MeatTopping
+                                        ] ;
+                    rdfs:subClassOf :Pizza ;
+                    owl:disjointWith :VegetarianPizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/OliveTopping
+:OliveTopping rdf:type owl:Class ;
+              rdfs:subClassOf :VegetableTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/ParmigianoTopping
+:ParmigianoTopping rdf:type owl:Class ;
+                   rdfs:subClassOf :CheeseTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/PisanPizza
+:PisanPizza rdf:type owl:Class ;
+            rdfs:subClassOf :NamedPizza ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasBase ;
+                              owl:allValuesFrom :RedBase
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasTopping ;
+                              owl:allValuesFrom [ rdf:type owl:Class ;
+                                                  owl:unionOf ( :AnchoviesTopping
+                                                                :CaperTopping
+                                                                :ParmigianoTopping
+                                                              )
+                                                ]
+                            ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/Pizza
+:Pizza rdf:type owl:Class ;
+       rdfs:subClassOf :Food ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasBase ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass :PizzaBase
+                       ] ;
+       owl:disjointWith [ owl:intersectionOf ( :IceCream
+                                               :PizzaBase
+                                               :PizzaTopping
+                                               :Salad
+                                             ) ;
+                          rdf:type owl:Class
+                        ] ;
+       owl:disjointUnionOf ( :NonVegetarianPizza
+                             :VegetarianPizza
+                           ) .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/PizzaBase
+:PizzaBase rdf:type owl:Class ;
+           rdfs:subClassOf :Food .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/PizzaTopping
+:PizzaTopping rdf:type owl:Class ;
+              rdfs:subClassOf :Food ;
+              owl:disjointUnionOf ( :CheeseTopping
+                                    :FishTopping
+                                    :MeatTopping
+                                    :VegetableTopping
+                                  ) .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/Pizzeria
+:Pizzeria rdf:type owl:Class ;
+          rdfs:subClassOf foaf:Organization .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/ProvolaTopping
+:ProvolaTopping rdf:type owl:Class ;
+                rdfs:subClassOf :CheeseTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/RedBase
+:RedBase rdf:type owl:Class ;
+         rdfs:subClassOf :PizzaBase ;
+         owl:disjointWith :WhiteBase .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/Salad
+:Salad rdf:type owl:Class ;
+       rdfs:subClassOf :Food .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/SausagePizza
+:SausagePizza rdf:type owl:Class ;
+              rdfs:subClassOf :NamedPizza ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :hasBase ;
+                                owl:allValuesFrom :RedBase
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :hasTopping ;
+                                owl:allValuesFrom [ rdf:type owl:Class ;
+                                                    owl:unionOf ( :MozzarellaTopping
+                                                                  :MushroomTopping
+                                                                  :SausageTopping
+                                                                )
+                                                  ]
+                              ] .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/SausageTopping
+:SausageTopping rdf:type owl:Class ;
+                rdfs:subClassOf :MeatTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/TastyPizza
+:TastyPizza rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty :hasTopping ;
+                                  owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :PizzaTopping
+                                ] ;
+            rdfs:subClassOf :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/VeganPizza
+:VeganPizza rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty :hasTopping ;
+                                  owl:allValuesFrom :VegetableTopping
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :hasTopping ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :VegetableTopping
+                                ] ;
+            rdfs:subClassOf :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/VegetableTopping
+:VegetableTopping rdf:type owl:Class ;
+                  rdfs:subClassOf :PizzaTopping .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/VegetarianPizza
+:VegetarianPizza rdf:type owl:Class ;
+                 rdfs:subClassOf :Pizza .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/WhiteBase
+:WhiteBase rdf:type owl:Class ;
+           rdfs:subClassOf :PizzaBase .
+
+
+###  http://xmlns.com/foaf/0.1/Organization
+foaf:Organization rdf:type owl:Class .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+foaf:Person rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://semanticwebcourse.org/poli/seminar5/aliceBrown
+:aliceBrown rdf:type owl:NamedIndividual ,
+                     foaf:Person .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/johnSmith
+:johnSmith rdf:type owl:NamedIndividual ,
+                    foaf:Person .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/margherita1
+:margherita1 rdf:type owl:NamedIndividual ,
+                      :MargheritaPizza ;
+             :wasBoughtBy :johnSmith .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/margherita2
+:margherita2 rdf:type owl:NamedIndividual ,
+                      :MargheritaPizza ;
+             :wasBoughtBy :aliceBrown ;
+             :wasMadeBy :pizzeriaLaTorre .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/marinara1
+:marinara1 rdf:type owl:NamedIndividual ,
+                    :MarinaraPizza ;
+           :wasBoughtBy :aliceBrown ;
+           :wasMadeBy :pizzeriaLaTorre .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/pizzeriaLaTorre
+:pizzeriaLaTorre rdf:type owl:NamedIndividual ,
+                          :Pizzeria ;
+                 :isBasedIn wd:Q13375 .
+
+
+###  http://semanticwebcourse.org/poli/seminar5/pizzeriaVesuvio
+:pizzeriaVesuvio rdf:type owl:NamedIndividual ,
+                          :Pizzeria ;
+                 :isBasedIn wd:Q2634 .
+
+
+###  http://www.wikidata.org/entity/Q13375
+wd:Q13375 rdf:type owl:NamedIndividual ,
+                   :City ;
+          rdfs:label "pisa"^^rdfs:Literal .
+
+
+###  http://www.wikidata.org/entity/Q2634
+wd:Q2634 rdf:type owl:NamedIndividual ,
+                  :City ;
+         rdfs:label "naples"^^rdfs:Literal .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

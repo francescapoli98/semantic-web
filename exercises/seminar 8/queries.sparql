@@ -1,7 +1,5 @@
 ### Run the following queries in Blazegraph:
 
-# Retrieve the IRI and the price of all pizzas made by Pizzeria Vesuvio, ordered by price
-PREFIX sem:	<http://www.semanticwebcourse.org/seminar8#>	
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -9,4 +7,47 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
 PREFIX dcterms:  <http://purl.org/dc/terms/>   
 PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+#prefix with new ontology
+PREFIX : <http://www.semanticwebcourse.org/seminar8#>
+
+# Retrieve the IRI and the price of all pizzas made by Pizzeria Vesuvio, ordered by price
+
+SELECT ?iri ?price
+WHERE {
+  ?iri a :Pizza	;
+         :wasMadeBy :pizzeriaVesusvio	;
+         :hasPrice ?price	.
+      } 
+ORDER BY ?price
+
+# Retrieve the IRI and the price of all pizzas that have been bought by AliceBrown or JohnSmith, filtered by price > 5€
+SELECT ?iri ?price
+WHERE {
+  ?iri a :Pizza	;
+         :hasPrice	?price	.
+  {?iri	:wasBoughtBy	:aliceBrown} UNION {?iri :wasBoughtBy	:johnSmith}
+  FILTER (?price > 5)
+}
+
+# Compute the total price of pizzas bought by AliceBrown
+
+SELECT (SUM(?price) AS ?sum)
+WHERE	{
+  ?iri a :Pizza	;
+         :wasBoughtBy :aliceBrown	;
+         :hasPrice	?price	.
+  }
+
+# Compute the average price of pizzas with red base made by Pizzeria Vesuvio
+
+SELECT (AVG(?price) AS ?avg)
+WHERE {
+  ?iri a :Pizza	;
+         :wasMadeBy	:pizzeriaVesuvio	;
+         :hasBase	?base	;
+         :hasPrice	?price	.
+  ?base a :RedBase	.
+  }
+
+# Retrieve the labels of people who have bought a total of more than 10€ of pizzas (use GROUP  BY and HAVING) 
 

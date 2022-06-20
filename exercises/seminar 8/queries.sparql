@@ -15,7 +15,7 @@ PREFIX : <http://www.semanticwebcourse.org/seminar8#>
 SELECT ?iri ?price
 WHERE {
   ?iri a :Pizza	;
-         :wasMadeBy :pizzeriaVesusvio	;
+         :wasMadeBy :pizzeriaVesuvio	;
          :hasPrice ?price	.
       } 
 ORDER BY ?price
@@ -51,3 +51,43 @@ WHERE {
 
 # Retrieve the labels of people who have bought a total of more than 10€ of pizzas (use GROUP  BY and HAVING) 
 
+SELECT ?label	
+WHERE {
+  ?iri a foaf:Person	;
+         rdfs:label ?label	;
+         :hasBought	?pizza	.
+  ?pizza a :Pizza	;
+           :hasPrice ?price	.
+       
+}
+GROUP BY (?label) HAVING (SUM(?price) > 10)
+
+# Compute the average price of each subclass of named pizza and filter the result by average < 6€
+
+SELECT ?pizzaclass (AVG(?price) AS ?avg) 
+WHERE {
+   ?pizzaclass rdfs:subClassOf	:NamedPizza	.
+  ?pizza a ?pizzaclass	;
+           :hasPrice	?price	.
+	
+} GROUP BY ?pizzaclass HAVING (?avg < 6)
+
+# Compute the average price of pizzas made by Pizzeria La Torre if the price of each pizza is reduced by 1€ (use BIND without GROUP  BY)
+
+SELECT (AVG(?newprice) AS ?avg)
+WHERE {
+  ?pizza a :Pizza;
+           :wasMadeBy :pizzeriaLaTorre;
+           :hasPrice ?price	.
+  BIND ((?price - 1) AS ?newprice)
+}
+
+# Compute the total price of pizzas bought by Alice Brown if a discount of 10% is applied on the price of each pizza
+
+SELECT (SUM(?newprice) AS ?sum)
+WHERE {
+  ?pizza a :Pizza	;
+           :wasBoughtBy :aliceBrown;
+           :hasPrice	?price	.
+  BIND ((?price - ((10*?price)/100)) AS ?newprice)
+}

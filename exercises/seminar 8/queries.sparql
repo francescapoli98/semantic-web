@@ -1,0 +1,12 @@
+### Run the following queries in Blazegraph:
+
+# Retrieve the IRI and the price of all pizzas made by Pizzeria Vesuvio, ordered by price
+PREFIX sem:	<http://www.semanticwebcourse.org/seminar8#>	
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX dcterms:  <http://purl.org/dc/terms/>   
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+

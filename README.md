@@ -9,7 +9,8 @@ The course's aim is learning the main concepts for the development of informatio
 * RDF and RDF Schema (syntax, vocabulary, semantics)
 * OWL 2 (DL and FUll)
 * SPARQL 
-* Protégé
+* Turtle
+* [Protégé](https://github.com/protegeproject)
 * Description Logics and First Order Logics
 
 

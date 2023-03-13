@@ -1,7 +1,7 @@
 # Semantic Web 2021/22 
-![logounipi](https://apre.it/wp-content/uploads/2021/01/logo_uni-pisa.png)
+<img src="https://apre.it/wp-content/uploads/2021/01/logo_uni-pisa.png" width="200" />
+Materials for the Semantic Web exam 🌐 
 
-Materials for the Semantic Web exam 🌐
 * Learning exercises (folder `exercises`)
 * Final project (folder `exam`)
 
